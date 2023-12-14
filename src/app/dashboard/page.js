@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Head from "next/head";
-import SideNavbar from "../../../components/SideNavbar";
+import { useRouter } from "next/navigation";
 
 import DashboardComponent from "./dashboard";
 import CreateQuizComponent from "./create-quiz";
@@ -9,7 +8,10 @@ import PastQuizzesComponent from "./past-quiz";
 
 export default function dashboard() {
   const [selectedOption, setSelectedOption] = useState("createQuiz");
-
+  const router = useRouter();
+  const handleLogout = () => {
+    router.push("/");
+  };
   const handleOptionClick = (option) => {
     setSelectedOption(option);
   };
@@ -44,14 +46,16 @@ export default function dashboard() {
         </ul>
         <div
           className="mt-auto text-black mb-4 font-bold border-2 p-2 px-4 cursor-pointer rounded-lg w-fit justify-center"
-          onClick={() => handleOptionClick("logout")}
+          onClick={handleLogout}
         >
           Logout
         </div>
       </div>
       <div className="m-10 flex-grow">
         {selectedOption === "dashboard" && <DashboardComponent />}
-        {selectedOption === "createQuiz" && <CreateQuizComponent />}
+        {selectedOption === "createQuiz" && (
+          <CreateQuizComponent setSelectedOption={setSelectedOption} />
+        )}
         {selectedOption === "pastQuizzes" && <PastQuizzesComponent />}
       </div>
     </div>

@@ -2,6 +2,7 @@
 import React, { useState, Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import QuizDisplay from "./../../../components/QuizDisplay";
 
 const difficulty = [{ name: "Easy" }, { name: "Medium" }, { name: "Hard" }];
 
@@ -41,9 +42,9 @@ const questions = [
   },
 ];
 
-export default function createQuiz() {
+export default function createQuiz({ setSelectedOption }) {
   const [selected, setSelected] = useState(difficulty[0]);
-  const [formDone, setFormDone] = useState(false);
+  const [formDone, setFormDone] = useState(true);
   const [processing, setProcessing] = useState(false);
 
   const [Topic, setTopic] = useState("");
@@ -56,7 +57,7 @@ export default function createQuiz() {
     }
 
     setFormDone(true);
-    setProcessing(true);
+    setProcessing(false);
   };
 
   return (
@@ -73,7 +74,7 @@ export default function createQuiz() {
             </h1>
           </div>
         ) : (
-          <QuizDisplay data={questions} />
+          <QuizDisplay data={questions} setSelectedOption={setSelectedOption} />
         )
       ) : (
         <div>
