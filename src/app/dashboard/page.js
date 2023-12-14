@@ -7,7 +7,24 @@ import CreateQuizComponent from "./create-quiz";
 import PastQuizzesComponent from "./past-quiz";
 
 export default function dashboard() {
-  const [selectedOption, setSelectedOption] = useState("createQuiz");
+  const getCookie = (name) => {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return null;
+  };
+
+  const isUserLoggedIn = getCookie("login") === "true";
+
+  if (!isUserLoggedIn) {
+    window.location.href = "/login";
+  }
+
+  const [selectedOption, setSelectedOption] = useState("pastQuizzes");
   const router = useRouter();
   const handleLogout = () => {
     router.push("/");

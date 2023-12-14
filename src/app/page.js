@@ -39,7 +39,7 @@ export default function Home() {
             <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <a
-                  href="#"
+                  href="/"
                   class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700  dark:text-white md:dark:text-blue-500"
                   aria-current="page"
                 >
@@ -48,7 +48,7 @@ export default function Home() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/login"
                   class="block py-2 px-3  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent  md:hover:text-blue-700  dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   Login
@@ -77,12 +77,14 @@ export default function Home() {
             platform leverages the power of OpenAI to instantly generate
             customized quizzes based on the topics you provide.{" "}
           </p>
-          <button
-            type="button"
-            class=" my-4 w-64 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xl px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Get Started Now
-          </button>
+          <Link href={`/signup`}>
+            <button
+              type="button"
+              class=" my-4 w-64 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xl px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Get Started Now
+            </button>
+          </Link>
         </div>
         <div class="p-8">
           <img src="website.png" />

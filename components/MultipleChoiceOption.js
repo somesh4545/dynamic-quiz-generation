@@ -14,7 +14,7 @@ export default function MultipleChoiceOption({ idx, question, update }) {
       </h1>
       <div className="flex flex-col">
         <form>
-          {question.options.map((value, ydx) => (
+          {JSON.parse(question.options).map((value, ydx) => (
             <label className="text-black flex flex-row">
               <input
                 value={`${value}`}

@@ -1,6 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MultipleChoiceOption from "./../../../../components/MultipleChoiceOption";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const questions = [
   {
@@ -42,9 +44,28 @@ const questions = [
 ];
 
 export default function takeQuiz({ params }) {
-  const [questionsArr, setquestionsArr] = useState(questions);
+  const router = useRouter();
 
-  const processQuizResult = () => {
+  const [processing, setprocessing] = useState(true);
+  const [questionsArr, setquestionsArr] = useState();
+  const [quiz, setquiz] = useState();
+  const [name, setname] = useState();
+
+  useEffect(() => {
+    fetchQuiz(params.slug);
+  }, []);
+
+  const fetchQuiz = async (slug) => {
+    const response = await axios.get("/api/take-quiz?quiz_id=" + slug);
+    const data = response.data.data;
+    console.log(data);
+    setquiz(data.quiz);
+
+    setquestionsArr(data.questions);
+    setprocessing(false);
+  };
+
+  const processQuizResult = async () => {
     const isConfirmed = window.confirm(
       "Are you sure you want to submit the quiz?"
     );
@@ -53,11 +74,18 @@ export default function takeQuiz({ params }) {
       let totalScore = 0;
       questionsArr.map((question) => {
         console.log(question.right, question.selected);
-        if (question.right == question.selected) totalScore += 1;
+        if (question.right_answer == question.selected) totalScore += 1;
       });
-      alert(totalScore);
+
+      await axios.post("/api/take-quiz", {
+        quiz_id: params.slug,
+        student_name: name,
+        score: totalScore,
+      });
+
       document.cookie = "quizSubmitted=" + params.slug;
       document.cookie = "quizScore=" + totalScore;
+      router.refresh();
     }
   };
 
@@ -71,8 +99,8 @@ export default function takeQuiz({ params }) {
     }
     return null; // Return null if the cookie is not found
   };
-
-  if (getCookieValue("quizSubmitted") == params.slug) {
+  let quizSubmitted = getCookieValue("quizSubmitted");
+  if (quizSubmitted == params.slug) {
     return (
       <div class="bg-gray-900 p-24 py-16 min-w-full min-h-screen flex justify-center items-center">
         <div class="bg-white rounded-lg p-24 h-1/3 w-2/3 flex  flex-col justify-center items-center ">
@@ -85,30 +113,47 @@ export default function takeQuiz({ params }) {
     );
   } else {
     return (
-      <div class="bg-gray-900 p-24 py-16 min-w-full min-h-screen flex">
-        <div class="bg-gray-300 rounded-lg w-full p-8  flex-grow">
-          <div class="mb-10">
-            <h1 class="font-extrabold text-3xl text-black">Quiz name</h1>
-            <p class="text-black mb-4">Topics names: sfls, fsljf</p>
-            <p class="text-black">Total questions: 10</p>
+      <>
+        {processing == true ? (
+          <h1>Fetcchi</h1>
+        ) : (
+          <div class="bg-gray-900 p-24 py-16 min-w-full min-h-screen flex">
+            <div class="bg-gray-300 rounded-lg w-full p-8  flex-grow">
+              <div class="mb-10">
+                <h1 class="font-extrabold text-3xl text-black">{quiz.name}</h1>
+                <p class="text-black mb-4">Topics names: {quiz.topics}</p>
+                <p class="text-black">Total questions: {questionsArr.length}</p>
+              </div>
+
+              <div className="flex flex-col my-4">
+                <label className="text-black text-lg">Your name</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setname(e.target.value)}
+                  name="name"
+                  className="p-2 mt-2 text-black rounded-lg"
+                />
+              </div>
+
+              {questionsArr.map((question, idx) => (
+                <MultipleChoiceOption
+                  idx={idx}
+                  question={question}
+                  update={setquestionsArr}
+                />
+              ))}
+
+              <button
+                className="bg-blue-600 py-2 px-4 rounded-lg my-4"
+                onClick={processQuizResult}
+              >
+                Submit
+              </button>
+            </div>
           </div>
-
-          {questionsArr.map((question, idx) => (
-            <MultipleChoiceOption
-              idx={idx}
-              question={question}
-              update={setquestionsArr}
-            />
-          ))}
-
-          <button
-            className="bg-blue-600 py-2 px-4 rounded-lg my-4"
-            onClick={processQuizResult}
-          >
-            Submit
-          </button>
-        </div>
-      </div>
+        )}
+      </>
     );
   }
 }

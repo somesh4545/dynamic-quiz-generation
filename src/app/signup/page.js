@@ -1,6 +1,54 @@
-import Image from "next/image";
+"use client";
+
+import excuteQuery from "../../../lib/db";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import axios from "axios";
+import Link from "next/link";
 
 export default function Signup() {
+  const [email, setemail] = useState();
+  const [password, setpassword] = useState();
+  const router = useRouter();
+
+  const getCookie = (name) => {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return null;
+  };
+
+  const handleSignup = async () => {
+    let data = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await axios.post("/api/teacher_signup", data);
+
+      if (response.data.status === false) {
+        alert(response.data.message);
+      } else {
+        alert(response.data.message);
+        document.cookie = "login=true";
+        document.cookie = "teacher_id=" + response.data.data.id;
+
+        const isUserLoggedIn = getCookie("login") === "true";
+        if (isUserLoggedIn) {
+          window.location.href = "/dashboard";
+        }
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("An error occurred during signup. Please try again.");
+    }
+  };
+
   return (
     <main className=" min-h-screen ">
       <nav class="bg-white border-gray-200 dark:bg-gray-900">
@@ -38,7 +86,7 @@ export default function Signup() {
             <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <a
-                  href="#"
+                  href="/"
                   class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent  dark:text-white "
                 >
                   Home
@@ -46,18 +94,20 @@ export default function Signup() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/login"
                   class="block py-2 px-3  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent  md:hover:text-blue-700  dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 >
                   Login
                 </a>
               </li>
-              <button
-                type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Sign up
-              </button>
+              <Link href="/signup">
+                <button
+                  type="button"
+                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Sign up
+                </button>
+              </Link>
             </ul>
           </div>
         </div>
@@ -81,6 +131,8 @@ export default function Signup() {
                   type="email"
                   name="email"
                   id="email"
+                  value={email}
+                  onChange={(e) => setemail(e.target.value)}
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required=""
@@ -98,6 +150,8 @@ export default function Signup() {
                   name="password"
                   id="password"
                   placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setpassword(e.target.value)}
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
                 />
@@ -105,6 +159,7 @@ export default function Signup() {
 
               <button
                 type="button"
+                onClick={handleSignup}
                 class="text-white w-full  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Signup

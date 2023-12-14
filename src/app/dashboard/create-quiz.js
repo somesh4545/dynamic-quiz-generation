@@ -3,61 +3,62 @@ import React, { useState, Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import QuizDisplay from "./../../../components/QuizDisplay";
+import axios from "axios";
 
 const difficulty = [{ name: "Easy" }, { name: "Medium" }, { name: "Hard" }];
 
-const questions = [
-  {
-    id: "12",
-    question: "Please select right option",
-    options: [
-      "This is the right option",
-      "Second one is right",
-      "Third",
-      "Fourth",
-    ],
-    right: "Fourth",
-  },
-  {
-    id: "13",
-    question: "Please select right option",
-    options: [
-      "This is the right option",
-      "Second one is right",
-      "Third",
-      "Fourth",
-    ],
-    right: "Fourth",
-  },
-  {
-    id: "14",
-    question: "Please select right option",
-    options: [
-      "This is the right option",
-      "Second one is right",
-      "Third",
-      "Fourth",
-    ],
-    right: "Third",
-  },
-];
-
 export default function createQuiz({ setSelectedOption }) {
   const [selected, setSelected] = useState(difficulty[0]);
-  const [formDone, setFormDone] = useState(true);
+  const [formDone, setFormDone] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const [questions, setQuestions] = useState();
 
+  const [name, setname] = useState("");
   const [Topic, setTopic] = useState("");
+  const [quizID, setQuizID] = useState();
+
   const [noOfQuestions, setnoOfQuestions] = useState(0);
+
+  const getCookieValue = (cookieName) => {
+    const cookieArray = document.cookie.split("; ");
+    for (const cookie of cookieArray) {
+      const [name, value] = cookie.split("=");
+      if (name === cookieName) {
+        return value;
+      }
+    }
+    return null;
+  };
 
   const generateQuiz = () => {
     if (!Topic || !noOfQuestions) {
       alert("All fields are required");
       return;
     }
-
     setFormDone(true);
-    setProcessing(false);
+    setProcessing(true);
+    const teacher_id = getCookieValue("teacher_id");
+    let data = {
+      name: name,
+      topics: Topic,
+      difficulty: selected.name,
+      no_questions: noOfQuestions,
+      teacher_id: teacher_id,
+    };
+    axios.post("/api/create-quiz", data).then((response) => {
+      response = response.data;
+      if (response.status == false) {
+        alert(response.message);
+        setProcessing(false);
+        setFormDone(false);
+      } else {
+        let ques = response.data;
+        setQuestions(ques.questions);
+        setQuizID(ques.quiz_id);
+        // consol
+        setProcessing(false);
+      }
+    });
   };
 
   return (
@@ -74,7 +75,11 @@ export default function createQuiz({ setSelectedOption }) {
             </h1>
           </div>
         ) : (
-          <QuizDisplay data={questions} setSelectedOption={setSelectedOption} />
+          <QuizDisplay
+            data={questions}
+            quiz_id={quizID}
+            setSelectedOption={setSelectedOption}
+          />
         )
       ) : (
         <div>
@@ -82,6 +87,17 @@ export default function createQuiz({ setSelectedOption }) {
           <p>Effortless Quiz Generation with AI Assistance</p>
 
           <div className="mt-16">
+            <div className="flex flex-col my-4">
+              <label>Quiz name</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setname(e.target.value)}
+                name="name"
+                className="p-2 mt-2 text-black rounded-lg"
+                placeholder="Enter quiz name"
+              />
+            </div>
             <div className="flex flex-col my-4">
               <label>Topic names</label>
               <input

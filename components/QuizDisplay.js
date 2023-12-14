@@ -1,8 +1,8 @@
 import copy from "clipboard-copy";
 
-export default function QuizDisplay({ data, setSelectedOption }) {
+export default function QuizDisplay({ data, quiz_id, setSelectedOption }) {
   const generateAndShare = async () => {
-    await copy("http://localhost:3000/take-quiz/14");
+    await copy("http://localhost:3000/take-quiz/" + quiz_id);
     alert("Link is copied. You can share it now :) ");
     setSelectedOption("pastQuizzes");
   };
@@ -23,7 +23,9 @@ export default function QuizDisplay({ data, setSelectedOption }) {
             {question.options.map((value, ydx) => (
               <p
                 className={`${
-                  value === question.right ? "text-blue-500" : "text-white"
+                  value === question.right_answer
+                    ? "text-blue-500"
+                    : "text-white"
                 }`}
               >
                 {ydx + 1}. {value}
