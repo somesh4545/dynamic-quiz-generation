@@ -7,8 +7,8 @@ Say goodbye to the days of spending countless hours crafting quizzes and hello t
 1. Home screen: <a href="https://raw.githubusercontent.com/somesh4545/dynamic-quiz-generation/master/ui/homescreen.png">link</a>
 2. Signup screen: <a href="https://raw.githubusercontent.com/somesh4545/dynamic-quiz-generation/master/ui/signup.png">link</a>
 3. Create quiz: <a href="https://raw.githubusercontent.com/somesh4545/dynamic-quiz-generation/master/ui/create-quiz.png">link</a>
-4. Attempt quiz: <a href="https://raw.githubusercontent.com/somesh4545/dynamic-quiz-generation/master/ui/attempt-quiz.png">link</a>
-
+4. Generated quiz: <a href="https://raw.githubusercontent.com/somesh4545/dynamic-quiz-generation/master/ui/generated_quiz.png">link</a>
+5. Attempt quiz: <a href="https://raw.githubusercontent.com/somesh4545/dynamic-quiz-generation/master/ui/attempt-quiz.png">link</a>
 
 
 ## Getting Started
