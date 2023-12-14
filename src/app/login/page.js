@@ -1,6 +1,29 @@
-import Image from "next/image";
+"use client";
+
+import excuteQuery from "../../../lib/db";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import axios from "axios";
 
 export default function Login() {
+  const [email, setemail] = useState();
+  const [password, setpassword] = useState();
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    let data = { email: email, password: password };
+    axios.post("/api/teacher_login", data).then((response) => {
+      response = response.data;
+      if (response.status == false) {
+        alert(response.message);
+      } else {
+        alert(response.message);
+        document.cookie = "login=true";
+        document.cookie = "teacher_id=" + response.data.id;
+      }
+    });
+  };
+
   return (
     <main className=" min-h-screen ">
       <nav class="bg-white border-gray-200 dark:bg-gray-900">
@@ -81,6 +104,8 @@ export default function Login() {
                   type="email"
                   name="email"
                   id="email"
+                  value={email}
+                  onChange={(e) => setemail(e.target.value)}
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required=""
@@ -97,6 +122,8 @@ export default function Login() {
                   type="password"
                   name="password"
                   id="password"
+                  value={password}
+                  onChange={(e) => setpassword(e.target.value)}
                   placeholder="••••••••"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required=""
@@ -105,6 +132,7 @@ export default function Login() {
 
               <button
                 type="button"
+                onClick={handleLogin}
                 class="text-white w-full  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Login
