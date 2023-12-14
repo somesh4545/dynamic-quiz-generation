@@ -125,14 +125,14 @@ export default function takeQuiz({ params }) {
                 <p class="text-black">Total questions: {questionsArr.length}</p>
               </div>
 
-              <div className="flex flex-col my-4">
+              <div className="flex flex-col my-4 mb-8">
                 <label className="text-black text-lg">Your name</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setname(e.target.value)}
                   name="name"
-                  className="p-2 mt-2 text-black rounded-lg"
+                  className="p-2 mt-2 text-black bg-transparent border-b-2 border-black w-48  focus:outline-none p-0"
                 />
               </div>
 

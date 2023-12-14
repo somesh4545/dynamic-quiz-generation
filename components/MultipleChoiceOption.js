@@ -25,6 +25,7 @@ export default function MultipleChoiceOption({ idx, question, update }) {
                 type="radio"
                 checked={String(question.selected) === `${value}`}
                 name="multipleChoice"
+                style={{ marginRight: 8 }}
               />
               <p className="ml-2">{value}</p>
             </label>

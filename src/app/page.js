@@ -87,7 +87,11 @@ export default function Home() {
           </Link>
         </div>
         <div class="p-8">
-          <img src="website.png" />
+          <img
+            width={800}
+            height={300}
+            src="https://i.ibb.co/SdNYXgy/smaple.png"
+          />
         </div>
       </div>
     </main>
