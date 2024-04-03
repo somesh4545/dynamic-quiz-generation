@@ -69,7 +69,6 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="m-10 flex-grow">
-        {selectedOption === "dashboard" && <DashboardComponent />}
         {selectedOption === "createQuiz" && (
           <CreateQuizComponent setSelectedOption={setSelectedOption} />
         )}
