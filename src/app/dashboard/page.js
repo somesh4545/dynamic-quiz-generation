@@ -2,17 +2,26 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import DashboardComponent from "./dashboard";
 import CreateQuizComponent from "./create-quiz";
 import PastQuizzesComponent from "./past-quiz";
 
 export default function Dashboard() {
+  const [_document, set_document] = React.useState(null)
+  const [_window, set_window] = React.useState(null)
+
+  React.useEffect(() => {
+    set_document(document)
+    set_window(window)
+  }, [])
+
   const getCookie = (name) => {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(name + "=")) {
-        return cookie.substring(name.length + 1);
+    if(_document != null) {
+      const cookies = _document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + "=")) {
+          return cookie.substring(name.length + 1);
+        }
       }
     }
     return null;
@@ -21,7 +30,8 @@ export default function Dashboard() {
   const isUserLoggedIn = getCookie("login") === "true";
 
   if (!isUserLoggedIn) {
-    window.location.href = "/login";
+    if(_window != null)
+    _window.location.href = "/login";
   }
 
   const [selectedOption, setSelectedOption] = useState("pastQuizzes");

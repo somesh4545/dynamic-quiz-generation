@@ -49,9 +49,11 @@ export default function TakeQuiz({ params }) {
   const [processing, setprocessing] = useState(true);
   const [questionsArr, setquestionsArr] = useState();
   const [quiz, setquiz] = useState();
+  const [_window, set_window] = React.useState(null)
   const [name, setname] = useState();
 
   useEffect(() => {
+    set_window(window)
     fetchQuiz(params.slug);
   }, []);
 
@@ -66,7 +68,7 @@ export default function TakeQuiz({ params }) {
   };
 
   const processQuizResult = async () => {
-    const isConfirmed = window.confirm(
+    const isConfirmed = _window.confirm(
       "Are you sure you want to submit the quiz?"
     );
 

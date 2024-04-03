@@ -9,10 +9,17 @@ import Link from "next/link";
 export default function Signup() {
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
-  const router = useRouter();
+  const router = useRouter();  
+  const [_document, set_document] = React.useState(null)
+  const [_window, set_window] = React.useState(null)
+
+  React.useEffect(() => {
+    set_document(document)
+    set_window(window)
+  }, [])
 
   const getCookie = (name) => {
-    const cookies = document.cookie.split(";");
+    const cookies = _document.cookie.split(";");
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
       if (cookie.startsWith(name + "=")) {
@@ -34,12 +41,12 @@ export default function Signup() {
         alert(response.data.message);
       } else {
         alert(response.data.message);
-        document.cookie = "login=true";
-        document.cookie = "teacher_id=" + response.data.data.id;
+        _document.cookie = "login=true";
+        _document.cookie = "teacher_id=" + response.data.data.id;
 
         const isUserLoggedIn = getCookie("login") === "true";
-        if (isUserLoggedIn) {
-          window.location.href = "/dashboard";
+        if (isUserLoggedIn && _window) {
+          _window.location.href = "/dashboard";
         }
       }
     } catch (error) {

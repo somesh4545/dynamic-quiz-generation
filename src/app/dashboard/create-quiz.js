@@ -18,13 +18,20 @@ export default function CreateQuiz({ setSelectedOption }) {
   const [quizID, setQuizID] = useState();
 
   const [noOfQuestions, setnoOfQuestions] = useState(0);
+  const [_document, set_document] = React.useState(null)
+
+  React.useEffect(() => {
+    set_document(document)
+  }, [])
 
   const getCookieValue = (cookieName) => {
-    const cookieArray = document.cookie.split("; ");
-    for (const cookie of cookieArray) {
-      const [name, value] = cookie.split("=");
-      if (name === cookieName) {
-        return value;
+    if(_document != undefined) {
+      const cookieArray = _document.cookie.split("; ");
+      for (const cookie of cookieArray) {
+        const [name, value] = cookie.split("=");
+        if (name === cookieName) {
+          return value;
+        }
       }
     }
     return null;
