@@ -36,14 +36,14 @@ export default function dashboard() {
     <div className="min-h-screen min-w-screen bg-gray-900 flex flex-row">
       <div className="w-80 min-h-full bg-white flex p-8 flex-col ">
         <ul className="">
-          <li
+          {/* <li
             className={`text-black mb-4 font-bold cursor-pointer ${
               selectedOption === "dashboard" && "text-blue-500"
             }`}
             onClick={() => handleOptionClick("dashboard")}
           >
             Dashboard
-          </li>
+          </li> */}
           <li
             className={`text-black mb-4 font-bold cursor-pointer ${
               selectedOption === "createQuiz" && "text-blue-500"

@@ -30,7 +30,6 @@ export default function Signup() {
 
     try {
       const response = await axios.post("/api/teacher_signup", data);
-
       if (response.data.status === false) {
         alert(response.data.message);
       } else {

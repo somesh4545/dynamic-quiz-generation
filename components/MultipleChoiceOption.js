@@ -15,7 +15,7 @@ export default function MultipleChoiceOption({ idx, question, update }) {
       <div className="flex flex-col">
         <form>
           {JSON.parse(question.options).map((value, ydx) => (
-            <label className="text-black flex flex-row">
+            <label key={ydx} className="text-black flex flex-row">
               <input
                 value={`${value}`}
                 onChange={() => {
@@ -24,7 +24,6 @@ export default function MultipleChoiceOption({ idx, question, update }) {
                 name={`question-${ydx}-${question.id}`}
                 type="radio"
                 checked={String(question.selected) === `${value}`}
-                name="multipleChoice"
                 style={{ marginRight: 8 }}
               />
               <p className="ml-2">{value}</p>

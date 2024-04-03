@@ -9,7 +9,6 @@ export async function POST(req) {
       query: "SELECT * FROM teachers WHERE email=?",
       values: [body.email],
     });
-
     if (checkEmailResult.length > 0) {
       return NextResponse.json({
         status: false,
