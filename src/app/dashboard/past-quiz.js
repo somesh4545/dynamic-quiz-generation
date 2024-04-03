@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function CreateQuiz() {
+export default function PastQuiz() {
   const [viewDetails, setViewDetails] = useState(null);
   const [quizDetails, setQuizDetails] = useState(null);
   const [quizzes, setQuizzes] = useState([]);

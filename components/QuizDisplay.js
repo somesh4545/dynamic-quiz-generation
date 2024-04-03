@@ -22,6 +22,7 @@ export default function QuizDisplay({ data, quiz_id, setSelectedOption }) {
             </h1>
             {question.options.map((value, ydx) => (
               <p
+                key={`${idx}-${ydx}`}
                 className={`${
                   value === question.right_answer
                     ? "text-blue-500"

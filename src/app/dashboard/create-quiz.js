@@ -7,7 +7,7 @@ import axios from "axios";
 
 const difficulty = [{ name: "Easy" }, { name: "Medium" }, { name: "Hard" }];
 
-export default function createQuiz({ setSelectedOption }) {
+export default function CreateQuiz({ setSelectedOption }) {
   const [selected, setSelected] = useState(difficulty[0]);
   const [formDone, setFormDone] = useState(false);
   const [processing, setProcessing] = useState(false);

@@ -43,7 +43,7 @@ const questions = [
   },
 ];
 
-export default function takeQuiz({ params }) {
+export default function TakeQuiz({ params }) {
   const router = useRouter();
 
   const [processing, setprocessing] = useState(true);
@@ -139,6 +139,7 @@ export default function takeQuiz({ params }) {
               {questionsArr.map((question, idx) => (
                 <MultipleChoiceOption
                   idx={idx}
+                  key={idx}
                   question={question}
                   update={setquestionsArr}
                 />

@@ -6,7 +6,7 @@ import DashboardComponent from "./dashboard";
 import CreateQuizComponent from "./create-quiz";
 import PastQuizzesComponent from "./past-quiz";
 
-export default function dashboard() {
+export default function Dashboard() {
   const getCookie = (name) => {
     const cookies = document.cookie.split(";");
     for (let i = 0; i < cookies.length; i++) {
