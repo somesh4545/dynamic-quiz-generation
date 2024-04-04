@@ -34,7 +34,8 @@ CREATE TABLE `quizzes` (
   `teacher_id` int(11) NOT NULL,
   `total_responses` int(11) NOT NULL,
   `avg_score` float NOT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp()
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -63,7 +64,8 @@ CREATE TABLE `quiz_questions` (
   `question` varchar(255) NOT NULL,
   `options` varchar(255) NOT NULL,
   `right_answer` varchar(255) NOT NULL,
-  `quiz_id` int(11) NOT NULL
+  `quiz_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -96,7 +98,8 @@ CREATE TABLE `responses` (
   `quiz_id` int(11) NOT NULL,
   `student_name` varchar(255) NOT NULL,
   `score` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp()
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -121,7 +124,8 @@ INSERT INTO `responses` (`id`, `quiz_id`, `student_name`, `score`, `date`) VALUE
 CREATE TABLE `teachers` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -133,33 +137,6 @@ INSERT INTO `teachers` (`id`, `email`, `password`) VALUES
 (2, 'someshsomani@gmail.com', 'somesh'),
 (3, 'someshsomani457@gmail.com', 'somesh');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `quizzes`
---
-ALTER TABLE `quizzes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `quiz_questions`
---
-ALTER TABLE `quiz_questions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `responses`
---
-ALTER TABLE `responses`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `teachers`
---
-ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables

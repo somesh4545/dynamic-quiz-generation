@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    MYSQL_HOST: "sql6.freesqldatabase.com",
-    MYSQL_PORT: "3306",
-    MYSQL_DATABASE: "sql6696398",
-    MYSQL_USER: "sql6696398",
-    MYSQL_PASSWORD: "dfedvfAgUE",
+    MYSQL_HOST: "mysql-28621c8e-someshsomani457-3bc6.a.aivencloud.com",
+    MYSQL_PORT: "17375",
+    MYSQL_DATABASE: "defaultdb",
+    MYSQL_USER: "avnadmin",
+    MYSQL_PASSWORD: "AVNS_dkYTZ4lwtiwkCdA9ELX",
     // use your own openai api key
   },
   webpack(config) {
