@@ -7,7 +7,6 @@ const nextConfig = {
     MYSQL_USER: "sql6696398",
     MYSQL_PASSWORD: "dfedvfAgUE",
     // use your own openai api key
-    OPENAI_API_KEY: "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",
   },
   webpack(config) {
     config.resolve.fallback = {
