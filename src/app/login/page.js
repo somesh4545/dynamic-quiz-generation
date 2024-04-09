@@ -36,7 +36,9 @@ export default function Login() {
   const handleLogin = async () => {
     let data = { email: email, password: password };
     axios.post("/api/teacher_login", data).then((response) => {
+      console.log(response)
       response = response.data;
+      console.log(response)
       if (response.status == false) {
         alert(response.message);
       } else {
