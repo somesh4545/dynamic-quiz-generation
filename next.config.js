@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-   
+    
   },
   webpack(config) {
     config.resolve.fallback = {
@@ -13,7 +13,9 @@ const nextConfig = {
       tls: false,
       net: false,
     };
-
+    config.optimization = {
+      minimize: false
+    }
     return config;
   },
 };
